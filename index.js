@@ -3,6 +3,8 @@ const mysql = require('mysql2/promise');
 const multer = require('multer');
 const session = require('express-session');
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -28,10 +30,10 @@ app.use(session({
 
 // DB pool
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'chanjhalaA1!',
-  database: 'dbms',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   connectionLimit: 10
 });
 
