@@ -45,7 +45,7 @@ youtube_awards_website/
 ├── views/               # EJS templates (game.ejs, health.ejs, awards.ejs, result.ejs, etc.)
 ├── models/              # DB query files (optional separation)
 ├── app.js               # Main server file
-├── database.sql         # MySQL schema
+├── theawards.sql         # MySQL schema
 └── README.md
 🗳️ Voting Workflow
 Admin sets voting start & end time.
