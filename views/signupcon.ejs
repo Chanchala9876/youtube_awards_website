@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Creator Registration</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 32px;
+      color: #fff;
+    }
+
+    nav {
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+      gap: 30px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .overlay {
+      min-height: calc(100vh - 140px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.5); /* Darker transparent for visibility */
+      padding: 30px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #f0f0f0;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 14px;
+      appearance: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #ccc;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    select option {
+      background: #333;
+      color: #fff;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      background-color: rgba(0, 123, 255, 0.8);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: rgba(0, 123, 255, 1);
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>YouTube Creator Awards</h1>
+  </header>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="/">Home</a>
+    <a href="/awards">Awards</a>
+    <a href="/awards">Vote</a>
+    <a href="/contact">Contact</a>
+  </nav>
+
+  <!-- Form Section -->
+  <div class="overlay">
+    <div class="container">
+      <h2>Creator Registration</h2>
+      <form action="/logina" method="POST" enctype="multipart/form-data">
+        <label for="name">Full Name:</label>
+        <input type="text" name="name" required placeholder="Enter your name">
+
+        <label for="channel_name">Channel Name:</label>
+        <input type="text" name="channel_name" required placeholder="Your channel's name">
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" required placeholder="example@email.com">
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" required placeholder="Enter a password">
+
+        <label for="subscriber_count">Subscriber Count:</label>
+        <input type="number" name="subscriber_count" required placeholder="e.g., 10000">
+
+        <label for="field_id">Select Field:</label>
+        <select name="field_id" required>
+           <option value="1">Beauty</option>
+                                <option value="2">Gaming</option>
+                                <option value="3">Education</option>
+                                <option value="4">Technical</option>
+                                <option value="5">Health</option>
+                                <option value="6">Cooking</option>
+                                <option value="7">Singing</option>
+                                <option value="8">Dancing</option>
+                                <option value="9">Vlogging</option>
+                                <option value="10">Traveling</option>
+                                <option value="11">News</option>
+                                <option value="22">Comedy</option>
+        </select>
+
+        <label for="description">Description:</label>
+        <textarea name="description" rows="4" required placeholder="Tell us about your channel..."></textarea>
+
+        <label for="image">Profile Photo (JPEG/PNG):</label>
+        <input type="file" name="image" accept="image/jpeg, image/png" required>
+
+        <label for="pdf">Upload PDF (max 2MB):</label>
+        <input type="file" name="pdf" accept=".pdf" required>
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 YouTube Creator Awards. All rights reserved.
+  </footer>
+</body>
+</html>

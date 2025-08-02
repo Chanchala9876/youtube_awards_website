@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Past Winners - 2023</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mt-4">2023 Winners</h1>
+    <div class="row">
+      <% winners.forEach(winner => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="<%= winner.image_path %>" class="card-img-top" alt="<%= winner.name %>">
+            <div class="card-body text-center">
+              <h5 class="card-title"><%= winner.name %></h5>
+              <p class="card-text"><%= winner.field %></p>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</body>
+</html>

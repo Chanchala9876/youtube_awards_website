@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f5f5dc, #d2b48c);
+      min-height: 100vh;
+      padding-top: 80px;
+      color: #3e2723;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #fff8e1;
+      border-bottom: 2px solid #ccc;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #6d4c41;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffe0b2;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      color: #4e342e;
+    }
+
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      margin: 10px;
+      font-weight: bold;
+      background-color: #8d6e63;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    select:hover, button:hover {
+      background-color: #6d4c41;
+    }
+
+    #fieldDropdown {
+      width: 260px;
+    }
+
+    .creator-card {
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      max-width: 800px;
+      backdrop-filter: blur(5px);
+    }
+
+    .creator-card img {
+      border-radius: 50%;
+      margin-right: 20px;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border: 2px solid #795548;
+    }
+
+    .creator-card .info {
+      flex: 1;
+    }
+
+    .creator-card .info h3 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+
+    .creator-card .info p {
+      margin: 5px 0;
+      font-size: 0.95rem;
+    }
+
+    .creator-card .actions {
+      text-align: right;
+    }
+
+    .creator-card .actions button {
+      margin-top: 5px;
+      background-color: #d84315;
+    }
+
+    .creator-card .actions button:hover {
+      background-color: #bf360c;
+    }
+
+    #readyForVoteBtn {
+      display: block;
+      margin: 40px auto;
+      font-size: 18px;
+      width: 220px;
+      background-color: #6d4c41;
+    }
+
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-success {
+      background-color: #388e3c;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background-color: #2e7d32;
+    }
+
+    .btn-danger {
+      background-color: #c62828;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #b71c1c;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 15px;
+      background-color: rgba(0, 0, 0, 0.05);
+      text-align: center;
+      font-size: 0.95rem;
+      color: #4e342e;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Header -->
+  <h1>Admin Dashboard</h1>
+
+  <!-- Field Dropdown -->
+  <div style="text-align: center;">
+    <label for="fieldDropdown">Select Field:</label>
+    <select id="fieldDropdown">
+      <option value="">-- Select Field --</option>
+      <% fields.forEach(field => { %>
+  <option value="<%= field.field_id %>"><%= field.field_name %></option>
+<% }) %>
+
+    </select>
+  </div>
+
+  <!-- Creator Cards -->
+  <div id="creatorContainer"></div>
+
+   
+  <form action="/set-voting-time" method="GET">
+    <button type="submit" class="btn btn-success">Click to Start voting</button>
+  </form>
+
+
+
+  <!-- Forms -->
+  <form action="/release-results" method="POST">
+    <button type="submit" class="btn btn-success">Click to Send Results</button>
+  </form>
+
+  <form action="/hide-results" method="POST">
+    <button type="submit" class="btn btn-danger">Hide Results Button</button>
+  </form>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 YouTube Awards Admin Panel. All rights reserved.
+  </footer>
+
+  <!-- Script -->
+  <script>
+    document.getElementById('fieldDropdown').addEventListener('change', function () {
+      const field_id = this.value;
+
+      if (field_id) {
+        fetch('/get-creators', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ field_id })
+        })
+        .then(res => res.json())
+        .then(creators => {
+          const container = document.getElementById('creatorContainer');
+          container.innerHTML = '';
+
+          if (creators.length > 0) {
+            creators.forEach(creator => {
+              const div = document.createElement('div');
+              div.classList.add('creator-card');
+              div.innerHTML = `
+                <img src="/uploads/${creator.photo}" alt="${creator.name}">
+
+                <div class="info">
+                  <h3>${creator.name}</h3>
+                  <p><strong>Email:</strong> ${creator.email}</p>
+                  <p><strong>Status:</strong> 
+                    <span style="color: ${creator.status === 'approved' ? 'green' : 'red'}">${creator.status}</span>
+                  </p>
+                </div>
+                <div class="actions">
+                  <button onclick="updateStatus(${creator.creator_id}, 'disapproved')">Disapprove</button>
+                </div>
+              `;
+              container.appendChild(div);
+            });
+          } else {
+            container.innerHTML = '<p style="text-align:center;">No creators found for this field.</p>';
+          }
+        })
+        .catch(error => console.error('Error fetching creators:', error));
+      } else {
+        document.getElementById('creatorContainer').innerHTML = '';
+      }
+    });
+
+    function updateStatus(creator_id, status) {
+      if (status === 'disapproved') {
+        fetch('/update-status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ creator_id, status })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert("Creator disapproved!");
+            document.getElementById('fieldDropdown').dispatchEvent(new Event('change'));
+          } else {
+            alert("Error updating status.");
+          }
+        })
+        .catch(err => console.error('Error:', err));
+      }
+    }
+
+    function markReadyForVote() {
+      const field_id = document.getElementById('fieldDropdown').value;
+
+      if (!field_id) {
+        alert('Please select a field first!');
+        return;
+      }
+
+      fetch('/mark-ready-for-vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ field_id })
+      })
+      .then(() => alert('All creators in this field are now ready for vote!'))
+      .catch(error => console.error('Error marking as ready for vote:', error));
+    }
+  </script>
+
+</body>
+</html>
