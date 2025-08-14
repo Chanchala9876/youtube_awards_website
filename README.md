@@ -89,7 +89,7 @@ bash
 Copy
 Edit
 node app.js
-Visit: http://localhost:5000
+Visit: http://localhost:3000
 
 🏆 Awards Categories (Example)
 Gaming
